@@ -13,22 +13,31 @@
             <br>
             <h2>Search for movie recommendations based on any song!</h2>
             <br><br>
-            
+
             <div class="form-group">
-                <input id="input" type="text" name="search" class="form-control" placeholder="Song Title">
+                <form method="get">
+                    <input id="input" list="songs" name="search">
+                    <datalist id="songs">
+                        {% for s in song_list %}
+                        <option value="{{s}}">
+                        {% endfor %}
+                    </datalist>
+                    <input type="submit">
+                  </form>
             </div>
-            <button type="submit" class="btn btn-info"> Search </button>
+
         </form>
         <form class="form-inline global-search">
         {% if data %}
             <h2>{{output_message}}</h2><br>
-            {% for d in data %}  
+            {% for score,d in data %}  
                 <br>
                 <p><b>{{d.name}}</b></p><br>
                 <p>{{d.description}}</p><br>
                 <p>Year Released: {{d.year}}</p><br>
                 <p>Genres: {{d.genres}}</p><br>
                 <p>Rating: {{d.rating}}</p><br>
+                <p>Sim Score: {{score}}</p><br>
                 <br>
             {% endfor %}
         {% endif %}

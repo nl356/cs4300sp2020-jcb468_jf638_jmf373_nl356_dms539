@@ -14,9 +14,9 @@ from movies.movies import *
 from songs.songs import *
 
 def build_vectorizer(max_features, stop_words, norm='l2'):
-    return TfidfVectorizer(stop_words = stop_words, max_features = max_features, norm = norm)
+  return TfidfVectorizer(stop_words = stop_words, max_features = max_features, norm = norm)
 
-def build_matrix():
+def build_matrix(movieData, songData, movie_name_to_index, song_name_to_index):
   word_max = 5000
   movie_and_songs_by_words = np.empty([len(movieData)+len(songData), word_max])
   tfidf_vec = build_vectorizer(word_max, "english")
@@ -29,18 +29,23 @@ def build_matrix():
   movie_and_songs_by_words = tfidf_vec.fit_transform(words_list).toarray()
   return movie_and_songs_by_words
 
-def get_cos_sim(song, movie):    
-    songID = song_name_to_index[song]
-    movID = movie_name_to_index[movie]
-    
-    songTfIdf = movie_and_songs_by_words[songID]
-    movTfIdf = movie_and_songs_by_words[movID]
-    
-    dot_product = np.dot(songTfIdf,movTfIdf)
-    
-    return dot_product
+def get_cos_sim(song, movie,song_name_to_index,movie_name_to_index,movie_and_songs_by_words):    
+  songID = song_name_to_index[song]
+  movID = movie_name_to_index[movie]
+  
+  songTfIdf = movie_and_songs_by_words[songID]
+  movTfIdf = movie_and_songs_by_words[movID]
+  
+  dot_product = np.dot(songTfIdf,movTfIdf)
+  
+  return dot_product
 
-def main(song_input):
+def main_search(song_input):
+  """
+	Returns top five movies most similar to given song in the form:
+   [(sim_score:int, mov:json entry dict), ...]  
+  Input song_input: string (song title)
+	"""
   # put somewhere else later so not called everytime
   movieData = read_movies_json()
   songData = read_songs_json()
@@ -58,12 +63,14 @@ def main(song_input):
     song_name_to_index[songDict["name"]]=j
     j=j+1
 
-  movie_and_songs_by_words = build_matrix()
+  movie_and_songs_by_words = build_matrix(movieData, songData, movie_name_to_index, song_name_to_index)
   #end bad stuff
 
-  song_title = song_input["name"]
+  # song_title = song_input["name"]
+  song_title = song_input
   sim_scores = []
   for movie in movieData:
-    sim_scores.append((get_cos_sim(song_title, movie["name"]), movie["name"] ))
-  
-  return sorted(sim_scores, reverse = True)[0:5]
+    cos_score = get_cos_sim(song_title, movie["name"],song_name_to_index,movie_name_to_index,movie_and_songs_by_words)
+    sim_scores.append((cos_score, movie))
+    
+  return sorted(sim_scores, reverse = True, key = lambda x: x[0])[0:5]
