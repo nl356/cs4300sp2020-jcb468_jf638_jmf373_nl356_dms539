@@ -25,10 +25,7 @@ def build_matrix():
   for i in movieData:
     words_list.append(i["description"])
   for i in songData:
-    song_string = ""
-    for j in i["lyrics"]:
-      song_string= song_string + " " + j
-    words_list.append(song_string)
+    words_list.append(i["lyrics"])
   movie_and_songs_by_words = tfidf_vec.fit_transform(words_list).toarray()
   return movie_and_songs_by_words
 
