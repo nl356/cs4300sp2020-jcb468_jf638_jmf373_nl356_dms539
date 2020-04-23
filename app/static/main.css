@@ -29,6 +29,13 @@ position:absolute;
 top:2%;
 right:2%;
 }
+.bottomcenter{
+position:absolute;
+bottom:2%;
+right:50%;
+transform: translate(-25%, 0);
+text-align:center;
+}
 .btn{
 background-color: #4285F4;
 border: none
@@ -37,7 +44,12 @@ border: none
 color: #4285F4;
 }
 body {
-background-color: #ffdf75;
+/* background-color: #ffdf75;
+background-image: url('/static/background.jpg');
+height: 100%;
+background-position: center center;
+background-repeat: no-repeat;
+background-size: cover; */
 }
 h1 {
 font-family: "Montserrat", sans-serif;

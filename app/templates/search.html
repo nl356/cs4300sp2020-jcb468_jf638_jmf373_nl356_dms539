@@ -1,46 +1,98 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="/static/bootstrap.min.css">
-        <link rel="stylesheet" href="/static/main.css">
-    </head>
-    <body>
-        <div class="topcorner">
-            <p>Project Name: Movie Sound Track Prototype 2</p>
-            <p>By: jcb468, jf638, jmf373, nl356, dms539</p>
-        </div>
-        <form class="form-inline global-search">
-            <h1>Movie Sound Track</h1>
-            <br>
-            <h2>Search for movie recommendations based on any song!</h2>
-            <br><br>
+<!DOCTYPE html>
+<html lang="en">
 
-            <div class="form-group">
-                <form method="get">
-                    <input id="input" list="songs" name="search" placeholder="Song Title"> <input type="submit">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Movie Sound Track</title>
+
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="static/css/landing-page.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <!-- Main Search -->
+  <header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h1 class="mb-5">Movie Sound Track</h1>
+          <h3 class="mb-5">Search for movie recommendations based on any song!</h3>
+        </div>
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        
+          <form>
+            <div class="form-row">
+              <div class="col-12 col-md-9 mb-2 mb-md-0">
+                <input class="form-control form-control-lg" id="input" list="songs" name="search" placeholder="Enter a Song Title">
                     <datalist id="songs">
                         {% for (title, artists) in song_list %}
                         <option value="{{title}} ({{artists}})">
                         {% endfor %}
                     </datalist>
-                    
-                </form>
+              </div>
+              <div class="col-12 col-md-3">
+                <button type="submit" class="btn btn-block btn-lg btn-primary">Search</button>
+              </div>
             </div>
-        </form>
-        <form class="form-inline global-search">
-        {% if data %}
-            <h2>{{output_message}}</h2><br>
-            {% for score,d in data %}  
-                <br>
-                <p><b>{{d.name}}</b></p><br>
-                <p>{{d.description}}</p><br>
-                <p>Year Released: {{d.year}}</p><br>
-                <p>Genres: {{d.genres}}</p><br>
-                <p>Rating: {{d.rating}}</p><br>
-                <p>Sim Score: {{score}}</p><br>
-                <br>
-            {% endfor %}
-        {% endif %}
-        </form>
-    </body>
+          </form>
+        
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Results -->
+  <section class="features-icons bg-light text-center">
+    <div class="container">
+      <h2>{{output_message}}</h2><br>
+      {% for score,d in data %}
+      <div class="row">
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <p><b>{{d.name}}</b></p>
+            <p>{{d.description}}</p>
+            <p>Year Released: {{d.year}}</p>
+            <p>Genres: {{d.genres}}</p>
+            <p>Rating: {{d.rating}}</p>
+            <p>Sim Score: {{score}}</p>
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item">
+              <p>Julie Barron (jcb468), Joe Fetter (jf638), Joe Fulgieri (jmf373), Nathalia Lie (nl356), Daniel Solinsky (dms539)</p>
+            </li>
+          </ul>
+          <p class="text-muted small mb-4 mb-lg-0">&copy; Movie Sound Track Prototype 2</p>
+        </div>
+
+        
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
 
 </html>
