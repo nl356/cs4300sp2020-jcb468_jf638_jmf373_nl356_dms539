@@ -18,7 +18,6 @@
 
 <body>
 
-
   <!-- Main Search -->
   <header class="masthead text-white text-center">
     <div class="overlay"></div>
@@ -26,7 +25,7 @@
       <div class="row">
         <div class="col-xl-9 mx-auto">
           <h1 class="mb-5">Movie Sound Track</h1>
-          <h3 class="mb-5">Search for movie recommendations based on any song!</h3>
+          <h3 class="mb-5">Search for movie recommendations based on any song</h3>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
         
@@ -53,11 +52,11 @@
 
   <!-- Search Results -->
   <section class="features-icons bg-light text-center">
-    <div class="container">
+    <div id="results" class="container">
       <h2>{{output_message}}</h2><br>
       {% for score,d in data %}
       <div class="row">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+          <div class="font-weight-light mx-auto mb-5 mb-lg-0 mb-lg-3">
             <p><b>{{d.name}}</b></p>
             <p>{{d.description}}</p>
             <p>Year Released: {{d.year}}</p>
@@ -83,8 +82,20 @@
           </ul>
           <p class="text-muted small mb-4 mb-lg-0">&copy; Movie Sound Track Prototype 2</p>
         </div>
-
-        
+        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item mr-3">
+              <a href="http://moviesoundtrack.herokuapp.com/">
+                <i class="fab icon-layers fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://github.com/nl356/cs4300sp2020-jcb468_jf638_jmf373_nl356_dms539">
+                <i class="fab fa-github fa-2x fa-fw"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </footer>

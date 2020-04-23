@@ -14,24 +14,13 @@ def search():
 	query = request.args.get('search')
 	if not query:
 		data = []
-		output_message = ''
-	elif query[:query.find('(')-1] not in title_list:
-		# WHY DOESN'T OUTPUT MSG WORK
-		data = []
-		output_message = "No results for the song \"" + query + "\". Please enter another song title."
+		output_message = 'Please enter a song title above to see results!'
 	else:
 		song_title = query[:query.find('(')-1]
-		data = main_search(song_title)
-		output_message = "Search results for the song \"" + song_title + "\" :"
+		if song_title in title_list:
+			data = main_search(song_title)
+			output_message = "Search results for the song \"" + song_title + "\" :"
+		else:
+			data = []
+			output_message = "No results for the song \"" + query + "\". Please enter another song title."
 	return render_template('search.html', output_message=output_message, data=data, song_list=song_list)
-
-
-		# song_title = query[:query.find('(')-1]
-		# data = main_search(song_title) 
-		# output_message = song_title + " " + str(song_title in title_list)
-		# # # "Search results for the song \"" + song_title + "\" :"
-		# # if song_title not in song_list:
-		# # 	data = []
-		# # 	output_message = "No results for the song \"" + song_title + "\". Please enter another song title."
-		# # else:
-
