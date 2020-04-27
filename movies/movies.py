@@ -1,13 +1,17 @@
 import json
 import csv
+from textblob import TextBlob
+
 
 def read_movies_json():
 	"""
 	Returns a list of movie dicts from `movies.json` of form:
 		name: string
 		description: string
+		description_sentiment: float
 		year: int
-		genre: list of string
+		genres: list of string
+		genres_sentiment: float
 		rating: float
 	"""
 	with open('./movies/movies.json', 'r') as f:
@@ -22,8 +26,10 @@ def write_movies_json():
 	with descriptions between 75 and 250 words. Contains keys:
 		name: string
 		description: string
+		description_sentiment: float
 		year: int
-		genre: list of string
+		genres: list of string
+		genres_sentiment: float
 		rating: float
 	"""
 	# Read movie data from CSV
@@ -48,8 +54,12 @@ def write_movies_json():
 
 			movie_json["name"] = row[1]
 			movie_json["description"] = row[13]
+			movie_json["description_sentiment"] = round(TextBlob(row[13]).polarity, 5)
+
 			movie_json["year"] = int(row[3])
 			movie_json["genres"] = row[5].split(", ")
+			movie_json["genres_sentiment"] = round(TextBlob(row[5]).polarity, 5)
+
 			movie_json["rating"] = float(row[14])
 
 			movie_jsons.append(movie_json)
@@ -64,4 +74,6 @@ def write_movies_json():
 
 if __name__ == "__main__":
 	write_movies_json()
+
+
 
