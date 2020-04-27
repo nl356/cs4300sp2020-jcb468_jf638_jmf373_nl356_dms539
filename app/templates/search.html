@@ -62,7 +62,7 @@
             <p>Year Released: {{d.year}}</p>
             <p>Genres: {{d.genres}}</p>
             <p>Rating: {{d.rating}}</p>
-            <p>Sim Score: {{score}}</p>
+            <p>Sim Score: {{score|round(5)}}</p>
           </div>
       </div>
       {% endfor %}
