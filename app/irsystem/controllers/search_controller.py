@@ -18,7 +18,7 @@ def search():
 	else:
 		song_title = query[:query.find('(')-1]
 		if song_title in title_list:
-			data = main_search(song_title)
+			data = main_search(song_title,5)
 			output_message = "Search results for the song \"" + song_title + "\" :"
 		else:
 			data = []

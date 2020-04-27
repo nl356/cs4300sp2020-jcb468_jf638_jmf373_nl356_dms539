@@ -12,7 +12,7 @@ def read_songs_json():
   with open('./songs/songs.json', 'r') as f:
     song_data = json.load(f)
 
-  return song_data[:501]
+  return song_data
 
 if __name__ == "__main__":
   read_songs_json()
