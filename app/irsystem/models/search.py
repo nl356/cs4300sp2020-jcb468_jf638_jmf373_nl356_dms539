@@ -23,7 +23,7 @@ def main_search(song_title, num_movies_to_output):
 	"""
   movieData = read_movies_json()
   songData = read_songs_json()
-  matrix = read_tfidf_matrix()
+  matrix = fetch_cached_matrix()
   
   song_name_to_index = {}
   j = len(movieData)
