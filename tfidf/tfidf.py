@@ -93,14 +93,14 @@ def build_matrix_from_inverted_index(index, num_movies):
 
 def read_tfidf_matrix():
   """
-  Reads the tfidf matrix 
+  Reads the tfidf matrix txt file
   """
   return np.load('tfidf/tfidf_matrix.npy')
   
 
 def write_matrix():
   """
-	Writes txt file containing matrix of tf-idf values
+	Writes npy file containing matrix of tf-idf values
 	"""
   movie_and_songs_by_words_matrix = build_matrix()
   np.save('tfidf/tfidf_matrix.npy', movie_and_songs_by_words_matrix)
@@ -135,7 +135,7 @@ def fetch_cached_matrix():
 
 
 if __name__ == "__main__":
-
-  fetch_cached_matrix()
+  write_matrix()
+  # fetch_cached_matrix()
 
 
