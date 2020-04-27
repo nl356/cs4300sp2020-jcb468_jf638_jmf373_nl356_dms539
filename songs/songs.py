@@ -32,3 +32,4 @@ def add_songs_sentiments():
 
 if __name__ == "__main__":
   read_songs_json()
+  add_songs_sentiments()

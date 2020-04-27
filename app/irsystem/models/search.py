@@ -37,16 +37,19 @@ def main_search(song_title, num_movies_to_output):
   sim_scores = []
   movID = 0
   for movie in movieData:
-    sim_score = get_cos_sim(songID, movID, matrix)
-    rating_factor = np.sqrt(movie["rating"])
+    # All scores between 1-10
+    sim_score = (get_cos_sim(songID, movID, matrix)) * 30
+    rating_factor = movie["rating"]
     movie_sent = movie["description_sentiment"] #Gets the sentiment of the movie
-    sentiment_factor = 2 - np.abs(song_sent - movie_sent)
+    sentiment_factor = (2 - np.abs(song_sent - movie_sent)) * 5
     # sentiment_factor = 1
-    score = sim_score*rating_factor*sentiment_factor
+    score = 0.8*sim_score + 0.1*rating_factor +  0.1*sentiment_factor
     sim_scores.append((score, movie))
     movID = movID+1
 
-  max_score = np.sqrt(10)*2
+  # Normalize by max score 
+  # max_score = np.sqrt(10)*2
+  max_score = 0.8*0.5 + 0.1*10 +  0.1*10
   for i in range(len(sim_scores)):
     sim_scores[i]=(sim_scores[i][0]/max_score, sim_scores[i][1])
     
