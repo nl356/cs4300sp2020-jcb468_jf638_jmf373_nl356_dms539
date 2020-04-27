@@ -3,7 +3,7 @@ import numpy as np
 import json
 from movies.movies import read_movies_json
 from songs.songs import read_songs_json
-from tfidf.tfidf import fetch_cached_matrix
+from tfidf.tfidf import read_tfidf_matrix
 
 def get_cos_sim(songID, movID, movie_and_songs_by_words):   
     """
@@ -23,7 +23,7 @@ def main_search(song_title, num_movies_to_output):
 	"""
   movieData = read_movies_json()
   songData = read_songs_json()
-  matrix = fetch_cached_matrix()
+  matrix = read_tfidf_matrix()
   
   song_name_to_index = {}
   j = len(movieData)
