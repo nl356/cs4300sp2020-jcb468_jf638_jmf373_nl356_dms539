@@ -8,3 +8,4 @@ vagrant/a4keypair.pem
 .idea/
 *.iml
 node_modules
+tfidf/tfidf_matrix.npy
