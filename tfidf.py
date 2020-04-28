@@ -138,4 +138,6 @@ if __name__ == "__main__":
   write_matrix()
   # fetch_cached_matrix()
 
+  print(read_tfidf_matrix().shape)
+
 
