@@ -22,6 +22,7 @@ def build_vectorizer(max_features, stop_words = 'english', norm='l2'):
     """
     return TfidfVectorizer(stop_words = stop_words, max_features = max_features, norm = norm)
 
+
 def build_matrix():
   """
   returns a single matrix of tf-idf values for both movies and songs
@@ -49,9 +50,7 @@ def build_inverted_index_from_matrix(matrix):
   """Creates an inverted index from a tf-idf matrix
   maps: word index (int) --> list of tuples (document index, occurences of the given word in this doc)
   """
-
   matrix = matrix.transpose()
-
   index = {}
   word_index = 0
   doc_index = 0
@@ -64,21 +63,17 @@ def build_inverted_index_from_matrix(matrix):
       if doc_occ != 0:
         index[word_index].append( (doc_index, doc_occ) )
 
-
       doc_index += 1
 
     doc_index = 0
     word_index += 1
-
 
   return index
 
 
 def build_matrix_from_inverted_index(index, num_movies):
   """Recreates the tf-idf matrix from an inverted index"""
-
   matrix = np.zeros( ( num_movies, len(index)) )
-
   w_index = 0
 
   for word in index:
@@ -110,7 +105,6 @@ def write_matrix():
 
 def read_index():
   """reads inverted index"""
-
   with open('./tfidf/index.json', 'r') as f:
     data = json.load(f)
 
