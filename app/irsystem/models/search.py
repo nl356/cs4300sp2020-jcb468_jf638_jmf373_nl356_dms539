@@ -3,7 +3,7 @@ import numpy as np
 import json
 from movies.movies import read_movies_json
 from songs.songs import read_songs_json
-from tfidf.tfidf import read_tfidf_matrix
+from tfidf import read_tfidf_matrix
 
 def get_cos_sim(songID, movID, movie_and_songs_by_words):   
     """

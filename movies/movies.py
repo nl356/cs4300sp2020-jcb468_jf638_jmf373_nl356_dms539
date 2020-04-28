@@ -17,7 +17,7 @@ def read_movies_json():
 	with open('./movies/movies.json', 'r') as f:
 		data = json.load(f)
 		
-	return data[-10000:]
+	return data
 
 
 def write_movies_json():
