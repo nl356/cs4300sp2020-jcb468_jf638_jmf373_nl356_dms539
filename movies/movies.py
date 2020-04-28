@@ -42,14 +42,14 @@ def write_movies_json():
 		movie_jsons = []
 
 		for row in rows:
-
+			
 			# Skip column names
 			if first:
 				first = False
 				continue
 
 			# Filter out irrelevant movies (by language, length of description)
-			if row[8] != 'English' or len(row[13]) < 75 or len(row[13]) > 250 or int(row[3]) < 2005:
+			if row[8] != 'English' or len(row[13]) < 75 or len(row[13]) > 250:
 				continue
 
 			movie_json = {}
