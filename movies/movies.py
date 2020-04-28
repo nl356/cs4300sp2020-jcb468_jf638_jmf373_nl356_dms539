@@ -16,6 +16,8 @@ def read_movies_json():
 	"""
 	with open('./movies/movies.json', 'r') as f:
 		data = json.load(f)
+
+	print("Retrieved %i movies from movies.json" % len(data))
 		
 	return data
 
@@ -33,7 +35,7 @@ def write_movies_json():
 		rating: float
 	"""
 	# Read movie data from CSV
-	with open("./IMDb movies.csv", 'r') as file:
+	with open("./movies/IMDb movies.csv", 'r') as file:
 
 		rows = csv.reader(file)
 		first = True
@@ -47,7 +49,7 @@ def write_movies_json():
 				continue
 
 			# Filter out irrelevant movies (by language, length of description)
-			if row[8] != 'English' or len(row[13]) < 75 or len(row[13]) > 250:
+			if row[8] != 'English' or len(row[13]) < 75 or len(row[13]) > 250 or int(row[3]) < 2005:
 				continue
 
 			movie_json = {}
@@ -66,7 +68,7 @@ def write_movies_json():
 
 
 	# Write movie data to JSON
-	with open('movies.json', 'w') as f:
+	with open('./movies/movies.json', 'w') as f:
 		json.dump(movie_jsons, f, indent=4)
 
 		print("Wrote out %i movies" % len(movie_jsons))

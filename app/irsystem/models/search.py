@@ -29,6 +29,7 @@ def main_search(song_title, num_movies_to_output):
   
   song_name_to_index = {}
   j = len(movieData)
+  print("Updating Song Data")
   for songDict in songData:
     song_name_to_index[songDict["name"]]=j
     j=j+1
@@ -38,6 +39,7 @@ def main_search(song_title, num_movies_to_output):
 
   sim_scores = []
   movID = 0
+  print("Updating Movie Data")
   for movie in movieData:
     # All scores between 1-10
     sim_score = (get_cos_sim(songID, movID, matrix)) * 25
@@ -57,4 +59,5 @@ def main_search(song_title, num_movies_to_output):
     
   sorted_by_sim = sorted(sim_scores, reverse = True, key = lambda x: x[0])[0:num_movies_to_output]
 
+  print("Done Search!!!!")
   return sorted_by_sim
