@@ -136,8 +136,20 @@ def fetch_cached_matrix():
 
 if __name__ == "__main__":
   write_matrix()
-  # fetch_cached_matrix()
+  # # fetch_cached_matrix()
 
-  print(read_tfidf_matrix().shape)
+  # print(read_tfidf_matrix().shape)
+
+  # m = build_matrix()
+
+  # x, y, z = np.linalg.svd(m[:1000])
+
+  # print(x.shape)
+  # print(y.shape)
+  # print(z.shape)
+
+
+
+
 
 
