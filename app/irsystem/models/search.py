@@ -21,9 +21,11 @@ def main_search(song_title, num_movies_to_output):
    [(sim_score:float, mov:json entry dict), ...]  
   Input song_title: string , int num_movies_to_output 
 	"""
+  print("search: Start loading Data")
   movieData = read_movies_json()
   songData = read_songs_json()
   matrix = read_tfidf_matrix()
+  print("search: Done loading Data")
   
   song_name_to_index = {}
   j = len(movieData)

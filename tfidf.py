@@ -90,10 +90,12 @@ def read_tfidf_matrix():
   """
   Reads the tfidf matrix compressed npy file
   """
+  print("Starting read matrix")
   with open('tfidf/tfidf_matrix.npz', 'rb') as f:
     dict_data = np.load(f)
     data = dict_data['arr_0']
   
+  print(data[50:60])
   return data
   
 
