@@ -93,7 +93,8 @@ def read_tfidf_matrix():
   with open('tfidf/tfidf_matrix.npz', 'rb') as f:
     dict_data = np.load(f)
     data = dict_data['arr_0']
-    return data
+  
+  return data
   
 
 def write_matrix():
