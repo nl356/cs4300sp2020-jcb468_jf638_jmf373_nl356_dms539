@@ -116,6 +116,7 @@ def get_movie_posters():
 
 
 if __name__ == "__main__":
+	# DO NOT REWRITE MOVIE JSON UNLESS NECESSARY
 	# write_movies_json()
 	get_movie_posters()
 

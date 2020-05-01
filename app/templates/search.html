@@ -75,9 +75,11 @@
       {% for score,d in data %}
       <div class="row">
           <div class="col-lg-3 showcase-img ">
-            <!-- Uncomment for movie poster -->
-            <!-- <img class="img-fluid mb-3" src={{d.poster_url}} alt="" style="vertical-align:middle"> -->
+            {% if d.poster_url == "" %}
             <img class="img-fluid mb-3" src="static\img\default_movie_poster.png" alt="" style="vertical-align:middle">
+            {% else %}
+            <img class="img-fluid mb-3" src={{d.poster_url}} alt="" style="vertical-align:middle">
+            {% endif %}
           </div>
           <div class="col-lg-9 my-auto showcase-text text-lg-left">
             <p class="lead mb-0"><b>{{d.name}}</b></p>
