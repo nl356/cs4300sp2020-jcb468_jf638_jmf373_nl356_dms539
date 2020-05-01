@@ -12,6 +12,8 @@ title_list = sorted([song["name"] for song in song_data])
 @irsystem.route('/', methods=['GET'])
 def search():
 	query = request.args.get('search')
+	year = request.args.get('year')
+	rating = request.args.get('rating')
 	if not query:
 		data = []
 		output_message = 'Please enter a song title above to see results!'

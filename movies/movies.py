@@ -1,6 +1,7 @@
 import json
 import csv
 from textblob import TextBlob
+from imdb import IMDb, IMDbError
 
 
 def read_movies_json():
@@ -26,6 +27,7 @@ def write_movies_json():
 	"""
 	Reads the data from IMDb movies.csv and writes out a json for English movies
 	with descriptions between 75 and 250 words. Contains keys:
+		imdb_id: string
 		name: string
 		description: string
 		description_sentiment: float
@@ -35,7 +37,7 @@ def write_movies_json():
 		rating: float
 	"""
 	# Read movie data from CSV
-	with open("./movies/IMDb movies.csv", 'r') as file:
+	with open("./movies/IMDb movies.csv", encoding='utf-8') as file:
 
 		rows = csv.reader(file)
 		first = True
@@ -54,6 +56,7 @@ def write_movies_json():
 
 			movie_json = {}
 
+			movie_json["imdb_id"] = row[0]
 			movie_json["name"] = row[1]
 			movie_json["description"] = row[13]
 			movie_json["description_sentiment"] = round(TextBlob(row[13]).polarity, 5)
@@ -74,8 +77,47 @@ def write_movies_json():
 		print("Wrote out %i movies" % len(movie_jsons))
 
 
+
+def get_movie_posters():
+	"""
+	Retrieves movie poster path from IMDB and appends base path to original JSON
+	"""
+	ia = IMDb()
+
+	# Read movie data from JSON and append TMDB poster path
+	with open('./movies/movies.json', 'r') as f:
+		movie_json = json.load(f)
+
+		for i in range(len(movie_json)):
+			url = ""
+			try:
+				m = movie_json[i]
+				movie = ia.get_movie(m["imdb_id"][2:])
+				url = movie["cover url"]
+			except:
+				print("No URL for movie at %i" % i)
+				pass
+			
+			m["poster_url"] = url
+			# Write to csv back up 
+			with open('./movies/posters.csv', 'a+', newline='') as write_obj:
+				csv_writer = csv.writer(write_obj)
+				csv_writer.writerow([url])
+				
+			if i%25 == 0:
+				print("Retrieved %i movie posters" % i)
+
+	# Write updated data to same JSON
+	with open('./movies/movies.json', 'w') as f:
+		json.dump(movie_json, f, indent=4)
+
+		print("Added poster path to %i movies" % len(movie_json))
+
+
+
 if __name__ == "__main__":
-	write_movies_json()
+	# write_movies_json()
+	get_movie_posters()
 
 
 

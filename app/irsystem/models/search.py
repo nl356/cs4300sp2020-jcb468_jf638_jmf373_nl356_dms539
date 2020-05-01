@@ -58,6 +58,7 @@ def main_search(song_title, num_movies_to_output):
   #   sim_scores[i]=(sim_scores[i][0]/max_score, sim_scores[i][1])
     
   sorted_by_sim = sorted(sim_scores, reverse = True, key = lambda x: x[0])[0:num_movies_to_output]
+  # sorted_by_sim = [(100,movieData[0]),(99,movieData[1]),(98,movieData[2]),(97,movieData[3]),(96,movieData[4])]
 
   print("Done Search!!!!")
   return sorted_by_sim

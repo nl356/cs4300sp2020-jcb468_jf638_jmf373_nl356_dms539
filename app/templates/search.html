@@ -24,14 +24,14 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">Movie Sound Track</h1>
+          <h1>Movie Sound Track</h1>
           <h3 class="mb-5">Search for movie recommendations based on any song</h3>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-        
           <form>
+            <!-- Basic Search -->
             <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
+              <div class="col-md-9 col-xl-9 mx-auto" id="basic-search">
                 <input class="form-control form-control-lg" id="input" list="songs" name="search" placeholder="Enter a Song Title">
                     <datalist id="songs">
                         {% for (title, artists) in song_list %}
@@ -39,9 +39,27 @@
                         {% endfor %}
                     </datalist>
               </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Search</button>
+              <!-- Advanced Search -->
+              <div class="py-3 advanced-search-button-wrapper">
+                <div id="advanced-search-button" onclick="toggleAdvancedSearch()"><p class="font-weight-light">Advanced Search</p></div>
               </div>
+              <div class="mb-3" id="advanced-search">
+                <div class="col-md-9">
+                    <label for="genreInput">Movie Release Year</label>
+                    <input id="yearInput" type="text" class="form-control" placeholder="Year" name="year">
+                </div>
+                <div class="col-md-6">
+                  <label for="rating">Movie Rating of at least</label>
+                  <select class="custom-select d-block w-100" id="rating" name="rating">
+                    <option value="">Choose...</option>
+                    {% for i in range(11) %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <!-- Submit Query -->
+              <button type="submit" class="btn btn-block btn-lg btn-primary">Search</button>
             </div>
           </form>
         
@@ -56,15 +74,21 @@
       <h2>{{output_message}}</h2><br>
       {% for score,d in data %}
       <div class="row">
-          <div class="font-weight-light mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <p><b>{{d.name}}</b></p>
-            <p>{{d.description}}</p>
-            <p>Year Released: {{d.year}}</p>
-            <p>Genres: {{d.genres}}</p>
-            <p>Rating: {{d.rating}}</p>
-            <p>Sim Score: {{score|round(5)}}</p>
+          <div class="col-lg-3 showcase-img ">
+            <!-- Uncomment for movie poster -->
+            <!-- <img class="img-fluid mb-3" src={{d.poster_url}} alt="" style="vertical-align:middle"> -->
+            <img class="img-fluid mb-3" src="static\img\default_movie_poster.png" alt="" style="vertical-align:middle">
           </div>
+          <div class="col-lg-9 my-auto showcase-text text-lg-left">
+            <p class="lead mb-0"><b>{{d.name}}</b></p>
+            <p>{{d.description}}</p>
+            <p class="font-weight-light mb-0">Year Released: {{d.year}}</p>
+            <p class="font-weight-light mb-0">Genres: {{d.genres|join(', ')}}</p>
+            <p class="font-weight-light mb-0">Rating: {{d.rating}}</p>
+            <p class="font-weight-light mb-0">Sim Score: {{score|round(5)}}</p>
+          </div>         
       </div>
+      <br>
       {% endfor %}
     </div>
   </section>
@@ -80,13 +104,18 @@
               <p>Julie Barron (jcb468), Joe Fetter (jf638), Joe Fulgieri (jmf373), Nathalia Lie (nl356), Daniel Solinsky (dms539)</p>
             </li>
           </ul>
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Movie Sound Track Prototype 2</p>
+          <p class="text-muted small mb-4 mb-lg-0">&copy; Movie Sound Track</p>
         </div>
         <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
           <ul class="list-inline mb-0">
             <li class="list-inline-item mr-3">
-              <a href="http://moviesoundtrack.herokuapp.com/">
-                <i class="fab icon-layers fa-2x fa-fw"></i>
+              <a href="http://moviesoundtrack1.herokuapp.com/">
+                <i class="fab icon-direction fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item mr-3">
+              <a href="http://moviesoundtrack2.herokuapp.com/">
+                <i class="fab icon-directions fa-2x fa-fw"></i>
               </a>
             </li>
             <li class="list-inline-item">
@@ -103,6 +132,18 @@
   <!-- Bootstrap core JavaScript -->
   <script src="static/vendor/jquery/jquery.min.js"></script>
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Helper Functions Script  -->
+  <script>
+    function toggleAdvancedSearch() {
+      currentAdvancedSearchDisplay = document.getElementById("advanced-search").style.display;
+      if (currentAdvancedSearchDisplay === "flex") {
+        document.getElementById("advanced-search").style.display = "none";
+      } else {
+        document.getElementById("advanced-search").style.display = "flex";
+      }
+    }
+  </script>
 
 </body>
 

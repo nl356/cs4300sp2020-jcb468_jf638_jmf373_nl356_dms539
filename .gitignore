@@ -9,3 +9,4 @@ vagrant/a4keypair.pem
 *.iml
 node_modules
 tfidf/tfidf_matrix.npy
+movies/posters.csv
