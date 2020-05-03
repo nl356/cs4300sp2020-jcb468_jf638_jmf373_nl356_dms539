@@ -4,6 +4,7 @@ from . import *
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 from app.irsystem.models.search import main_search
+from nltk.metrics.distance import edit_distance
 from songs.songs import read_songs_json
 
 song_data = read_songs_json()
@@ -25,7 +26,41 @@ def search():
 			data = main_search(song_title, num_movies_to_output=5)
 			output_message = "Search results for the song \"" + song_title + "\" :"
 		else:
-			data = []
-			output_message = "No results for the song \"" + query + "\". Please enter another song title."
+
+			if len(title_list) > 0:
+				if "(" in query:
+					song_title = query[:query.find('(')-1]
+				else:
+					song_title = query
+
+				title_no_artist = title_list[0].partition(" (")
+				if len(title_no_artist) > 0:
+					title_no_artist = title_no_artist[0]
+				else:
+					title_no_artist = title_list[0]
+
+				min_distance = edit_distance(song_title.lower(), title_no_artist.lower(), transpositions=True)
+				replacement_song = title_list[0]
+
+				for title in title_list[1:]:
+
+					title_no_artist = title.partition(" (")
+					if len(title_no_artist) > 0:
+						title_no_artist = title_no_artist[0]
+					else:
+						title_no_artist = title
+
+					distance = edit_distance(song_title.lower(), title_no_artist.lower(), transpositions=True)
+
+					if distance < min_distance:
+						min_distance = distance
+						replacement_song = title
+
+			if min_distance <= 3:
+				data = main_search(replacement_song, num_movies_to_output=5)
+				output_message = "Search results for the song \"" + replacement_song + "\" :"
+			else:
+				data = []
+				output_message = "No results for the song \"" + query + "\". Please enter another song title."
 	return render_template('search.html', output_message=output_message, data=data, song_list=title_artist_list)
 	# return render_template('search.html', output_message=output_message, data=data, song_list=json.dumps(title_artist_list))
