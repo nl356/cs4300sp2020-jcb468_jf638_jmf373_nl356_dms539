@@ -51,7 +51,7 @@ def main_search(song_title, num_movies_to_output, disliked_song_title = None, ye
       movie_sent = movie["description_sentiment"] #Gets the sentiment of the movie
       sentiment_factor = (2 - np.abs(song_sent - movie_sent)) * 5
       # sentiment_factor = 1
-      score = 0.65*sim_score + 0.05*rating_factor +  0.2*sentiment_factor + .1*sim_score_dislike
+      score = 0.65*sim_score + 0.05*rating_factor +  0.2*sentiment_factor + .35*sim_score_dislike
       sim_scores.append((score, movie))
       movID = movID+1
 
@@ -78,15 +78,15 @@ def main_search(song_title, num_movies_to_output, disliked_song_title = None, ye
   new_sim_scores = []
   for score_movie_tuple in sim_scores:
     if rating is not None:
-      if score_movie_tuple[1]["rating"]>=rating: 
+      if score_movie_tuple[1]["rating"]>=int(rating): 
         if year is not None:
-          if score_movie_tuple[1]["year"]==year:
+          if score_movie_tuple[1]["year"]==int(year):
             new_sim_scores.append(score_movie_tuple)
         else:
           new_sim_scores.append(score_movie_tuple)
     else:
       if year is not None:
-          if score_movie_tuple[1]["year"]==year:
+          if score_movie_tuple[1]["year"]==int(year):
             new_sim_scores.append(score_movie_tuple)
       else:
         new_sim_scores.append(score_movie_tuple)

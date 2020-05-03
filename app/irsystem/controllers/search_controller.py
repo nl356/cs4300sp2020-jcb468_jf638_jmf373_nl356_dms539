@@ -23,8 +23,27 @@ def search():
 	else:
 		song_title = query[:query.find('(')-1]
 		if song_title in title_list:
-			data = main_search(song_title, num_movies_to_output=5)
-			output_message = "Search results for the song \"" + song_title + "\" :"
+
+			if year == "":
+				year = None
+			if rating == "":
+				rating = None
+			
+			if dislikeSong == "":
+				data = main_search(song_title, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=None)
+				output_message = "Search results for the song \"" + song_title + "\" :"
+			else: 
+				dis_song_title = dislikeSong[:dislikeSong.find('(')-1]
+
+				if not dis_song_title in title_list:
+					dis_song_title = None
+				
+				if dis_song_title == song_title:
+					output_message = "Please choose a different song you dislike"
+					data = []
+				else:
+					data = main_search(song_title, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=dis_song_title)
+					output_message = "Search results for the song \"" + song_title + "\" :"
 		else:
 
 			if len(title_list) > 0:
