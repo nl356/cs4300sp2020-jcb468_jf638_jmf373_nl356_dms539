@@ -76,8 +76,28 @@ def search():
 						replacement_song = title
 
 			if min_distance <= 3:
-				data = main_search(replacement_song, num_movies_to_output=5)
-				output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" :"
+
+				if year == "":
+					year = None
+				if rating == "":
+					rating = None
+				
+				if dislikeSong == "":
+					data = main_search(replacement_song, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=None)
+					output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" :"
+				else: 
+					dis_song_title = dislikeSong[:dislikeSong.find('(')-1]
+
+					if not dis_song_title in title_list:
+						dis_song_title = None
+					
+					if dis_song_title == song_title:
+						output_message = "Please choose a different song you dislike"
+						data = []
+					else:
+						data = main_search(replacement_song, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=dis_song_title)
+						output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" :"
+
 			else:
 				data = []
 				output_message = "No results for the song \"" + query + "\". Please enter another song title."
