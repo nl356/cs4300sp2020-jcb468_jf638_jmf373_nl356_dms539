@@ -20,18 +20,20 @@ def search():
 
 	output_message_addendum = ""
 
-	if year == "":
+	if year == "" or year==None:
 		year = None
 	else:
 		output_message_addendum = " within " + year
 
-	if rating == "":
+	if rating == "" or rating==None:
 		rating = None
 	elif output_message_addendum != "":
 		output_message_addendum += (" and a rating of at least " + rating)
 	else:
 		output_message_addendum = " with a rating of at least " + rating
 
+	if dislikeSong == None:
+		dislikeSong = ""
 
 	if not query:
 		data = []
