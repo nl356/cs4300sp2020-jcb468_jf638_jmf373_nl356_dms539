@@ -23,7 +23,15 @@ def search():
 	if year == "" or year==None:
 		year = None
 	else:
-		output_message_addendum = " within " + year
+		try:
+			year = int(year)
+			if year < 1910 or year > 2019:
+				year == None
+			else:
+				output_message_addendum = " within " + str(year)
+		except:
+			year = None
+
 
 	if rating == "" or rating==None:
 		rating = None
@@ -98,7 +106,11 @@ def search():
 				
 				if dislikeSong == "":
 					data = main_search(replacement_song, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=None)
-					output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" " + output_message_addendum +":"
+
+					if min_distance == 0:
+						output_message = "Search results for the song \"" + replacement_song + "\" " + output_message_addendum +":"
+					else:
+						output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" " + output_message_addendum +":"
 				else: 
 					dis_song_title = dislikeSong[:dislikeSong.find('(')-1]
 
@@ -113,7 +125,10 @@ def search():
 							output_message_addendum += (" with disliked song \"" + dis_song_title + "\"")
 
 						data = main_search(replacement_song, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=dis_song_title)
-						output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" " + output_message_addendum +":"
+						if min_distance == 0:
+							output_message = "Search results for the song \"" + replacement_song + "\" " + output_message_addendum +":"
+						else:
+							output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" " + output_message_addendum +":"
 
 			else:
 				data = []

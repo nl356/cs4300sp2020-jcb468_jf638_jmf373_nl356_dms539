@@ -80,7 +80,9 @@ def main_search(song_title, num_movies_to_output, disliked_song_title = None, ye
     if rating is not None:
       if score_movie_tuple[1]["rating"]>=int(rating): 
         if year is not None:
-          if int(score_movie_tuple[1]["year"])==int(year):
+          decade = int(year)-(int(year)%10)
+          decade = list(range(decade,decade+10))
+          if int(score_movie_tuple[1]["year"]) in decade:
             new_sim_scores.append(score_movie_tuple)
         else:
           new_sim_scores.append(score_movie_tuple)

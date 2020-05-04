@@ -19,7 +19,6 @@ def read_movies_json():
 		data = json.load(f)
 
 	print("Retrieved %i movies from movies.json" % len(data))
-		
 	return data
 
 
