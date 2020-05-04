@@ -31,14 +31,14 @@
           <form autocomplete="off">
             <!-- Basic Search -->
             <div class="form-row">
-              <!-- <div class="autocomplete col-md-9 col-xl-9 mx-auto text-black-50" id="basic-search"></div> -->
-              <div class="col-md-9 col-xl-9 mx-auto text-black-50" id="basic-search">
+              <div class="autocomplete col-md-9 col-xl-9 mx-auto text-black-50" id="basic-search">
+              <!-- <div class="col-md-9 col-xl-9 mx-auto text-black-50" id="basic-search"> -->
                 <input class="form-control form-control-lg " id="songInput" list="songs" name="search" placeholder="Enter a Song Title">
-                    <datalist id="songs">
+                    <!-- <datalist id="songs">
                         {% for s in song_list %}
                         <option value="{{s}}">
                         {% endfor %}
-                    </datalist>
+                    </datalist> -->
               </div>
               <!-- Advanced Search -->
               <div class="py-3 advanced-search-button-wrapper">
@@ -258,12 +258,12 @@
     });
     }
 
-    // var songList = JSON.parse('{{song_list}}');
+    var songList = JSON.parse('{{song_list | tojson}}');
     // console.log(songList);
 
-    // window.addEventListener('load', function () {
-    //   autocomplete(document.getElementById("songInput"), songList);
-    // })
+    window.addEventListener('load', function () {
+      autocomplete(document.getElementById("songInput"), songList);
+    })
     
   </script>
 
