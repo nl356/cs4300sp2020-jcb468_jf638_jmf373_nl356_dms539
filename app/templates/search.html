@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-xl-9 mx-auto">
           <h1>Movie Sound Track</h1>
-          <h3 class="mb-5">Search for movie recommendations based on any song</h3>
+          <h3 class="mb-5">Track down Movie recommendations based on any Song</h3>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <form autocomplete="off">
@@ -45,8 +45,8 @@
                 </div>
                 <div class="col-md-4">
                   <label for="rating">Min Movie Rating</label>
-                  <select class="custom-select d-block w-100" id="rating" name="rating">
-                    <option value="">(optional)</option>
+                  <select class="custom-select d-block w-100 text-black-50" id="rating" name="rating">
+                    <option value="">Rating (optional)</option>
                     {% for i in range(10) %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}
@@ -101,7 +101,7 @@
       {% endfor %}
       <br>    
       <h4>How to Interpret the Composite Similarity Score:</h4>
-    <p> Your score is a combination of the similarity between song lyrics and movie plot, the overall sentiment of the song and movie, and the movie rating. We also penalize any movies that are too similar to your disliked song and customize your results to your inputted year and minimum rating. A movie is a good match if it's composite score is at least 50%. Grab a bag of popcorn and enjoy! </p>  
+    <p> Your score is a combination of the similarity between song lyrics and movie plot, the overall sentiment of the song and movie, and the movie rating. We also penalize any movies that are too similar to your disliked song and customize your results to your inputted year and minimum rating. A movie is a good match if its composite score is at least 50%. Grab a bag of popcorn and enjoy! </p>  
     </div>
     
   </section>
