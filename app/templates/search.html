@@ -40,14 +40,14 @@
               </div>
               <div class="mb-3" id="advanced-search">
                 <div class="col-md-3">
-                    <label for="genreInput">Movie Release Decade</label>
-                    <input id="yearInput" type="text" class="form-control" placeholder="Decade (optional)" name="year">
+                    <label for="genreInput">Choose a Year</label>
+                    <input id="yearInput" type="text" class="form-control" placeholder="Year (optional)" name="year">
                 </div>
-                <div class="col-md-3">
-                  <label for="rating">Movie Rating of at least</label>
+                <div class="col-md-4">
+                  <label for="rating">Min Movie Rating</label>
                   <select class="custom-select d-block w-100" id="rating" name="rating">
                     <option value="">(optional)</option>
-                    {% for i in range(11) %}
+                    {% for i in range(10) %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}
                   </select>
@@ -57,7 +57,6 @@
                   <div class="autocomplete text-black-50" id="advanced-search-dislike-song">
                     <input class="form-control" id="dislikeSongInput" list="songs" name="dislikeSong" placeholder="Song Title (optional)">
                   </div>
-                  <!-- <input id="songDislikeInput" type="text" class="form-control" placeholder="Song" name="dislikeSong"> -->
                 </div>
               </div>
               <!-- Submit Query -->
@@ -94,13 +93,17 @@
             <p class="mb-0">{{d.description}}</p>
             <p class="mb-0">Year Released: {{d.year}}</p>
             <p class="mb-0">Genres: {{d.genres|join(', ')}}</p>
-            <p>Rating: {{d.rating}}</p>
+            <p>Movie Rating: {{d.rating}}</p>
             <p class="font-weight-light">Composite Similarity Score: {{(score*10)|round(2)}}%</p>
           </div>         
+          <br>
       </div>
-      <br>
       {% endfor %}
+      <br>    
+      <h4>How to Interpret the Composite Similarity Score:</h4>
+    <p> Your score is a combination of the similarity between song lyrics and movie plot, the overall sentiment of the song and movie, and the movie rating. We also penalize any movies that are too similar to your disliked song and customize your results to your inputted year and minimum rating. A movie is a good match if it's composite score is at least 50%. Grab a bag of popcorn and enjoy! </p>  
     </div>
+    
   </section>
 
 
@@ -261,8 +264,8 @@
     });
     }
 
-    songList = JSON.parse({{song_list | tojson}});
-    // console.log(songList);
+    var songList = JSON.parse({{song_list | tojson}});
+    var de
 
     window.addEventListener('load', function () {
       autocomplete(document.getElementById("songInput"), songList);

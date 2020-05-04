@@ -26,18 +26,18 @@ def search():
 			year = int(year)
 			if year < 1910 or year > 2019:
 				year == None
+				output_message_addendum = "Year must be between 1910-2019."
 			else:
-				decade = int(year)-(int(year)%10)
-				output_message_addendum = "Showing movies released within the decade " + str(decade)
+				output_message_addendum = "Showing movies released within the decade of " + str(year)
 		except:
 			year = None
 
 	if rating == "" or rating==None:
 		rating = None
 	elif output_message_addendum != "":
-		output_message_addendum += (" and a rating of at least " + rating)
+		output_message_addendum += (" and a movie rating of at least " + rating)
 	else:
-		output_message_addendum = "Showing movies with a rating of at least " + rating
+		output_message_addendum = "Showing movies with a movie rating of at least " + rating
 
 	if dislikeSong == None:
 		dislikeSong = ""
