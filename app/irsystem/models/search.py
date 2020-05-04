@@ -45,13 +45,13 @@ def main_search(song_title, num_movies_to_output, disliked_song_title = None, ye
     print("Updating Movie Data")
     for movie in movieData:
       # All scores between 1-10
-      sim_score = (get_cos_sim(songID, movID, matrix)) * 10
+      sim_score = min(10,get_cos_sim(songID, movID, matrix) * 10)
       sim_score_dislike = (get_cos_sim(disliked_songID, movID, matrix)) * -10
       rating_factor = movie["rating"]
       movie_sent = movie["description_sentiment"] #Gets the sentiment of the movie
       sentiment_factor = (2 - np.abs(song_sent - movie_sent)) * 5
       # sentiment_factor = 1
-      score = 0.85*sim_score + 0.05*rating_factor +  0.1*sentiment_factor + .1*sim_score_dislike
+      score = 0.5*sim_score + 0.1*rating_factor +  0.3*sentiment_factor + .1*sim_score_dislike
       sim_scores.append((score, movie))
       movID = movID+1
 
@@ -61,11 +61,11 @@ def main_search(song_title, num_movies_to_output, disliked_song_title = None, ye
     print("Updating Movie Data")
     for movie in movieData:
       # All scores between 1-10
-      sim_score = (get_cos_sim(songID, movID, matrix)) * 10
+      sim_score = min(10,get_cos_sim(songID, movID, matrix) * 10)
       rating_factor = movie["rating"]
       movie_sent = movie["description_sentiment"] #Gets the sentiment of the movie
       sentiment_factor = (2 - np.abs(song_sent - movie_sent)) * 5
-      score = 0.85*sim_score + 0.05*rating_factor +  0.1*sentiment_factor 
+      score = 0.6*sim_score + 0.1*rating_factor +  0.3*sentiment_factor 
       sim_scores.append((score, movie))
       movID = movID+1
       
