@@ -118,5 +118,5 @@ def search():
 			else:
 				data = []
 				output_message = "No results for the song \"" + query + "\". Please enter another song title."
-	return render_template('search.html', output_message=output_message, data=data, song_list=title_artist_list)
-	# return render_template('search.html', output_message=output_message, data=data, song_list=json.dumps(title_artist_list))
+				
+	return render_template('search.html', output_message=output_message, data=data, song_list=json.dumps(title_artist_list))
