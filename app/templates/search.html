@@ -32,7 +32,7 @@
             <!-- Basic Search -->
             <div class="form-row">
               <div class="autocomplete col-md-9 col-xl-9 mx-auto text-black-50" id="basic-search">
-                <input class="form-control form-control-lg" id="songInput" list="songs" name="search" placeholder="Enter a Song Title or Artist">
+                <input class="form-control form-control-lg" id="songInput" list="songs" name="search" placeholder="Enter a Song Title">
               </div>
               <!-- Advanced Search -->
               <div class="py-3 advanced-search-button-wrapper">
@@ -41,12 +41,12 @@
               <div class="mb-3" id="advanced-search">
                 <div class="col-md-3">
                     <label for="genreInput">Movie Release Decade</label>
-                    <input id="yearInput" type="text" class="form-control" placeholder="Year" name="year">
+                    <input id="yearInput" type="text" class="form-control" placeholder="Decade (optional)" name="year">
                 </div>
                 <div class="col-md-3">
                   <label for="rating">Movie Rating of at least</label>
                   <select class="custom-select d-block w-100" id="rating" name="rating">
-                    <option value="">Choose...</option>
+                    <option value="">(optional)</option>
                     {% for i in range(11) %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}
@@ -55,7 +55,7 @@
                 <div class="col-md-6">
                   <label for="genreInput">Song you dislike</label>
                   <div class="autocomplete text-black-50" id="advanced-search-dislike-song">
-                    <input class="form-control" id="dislikeSongInput" list="songs" name="dislikeSong" placeholder="Enter a Song Title">
+                    <input class="form-control" id="dislikeSongInput" list="songs" name="dislikeSong" placeholder="Song Title (optional)">
                   </div>
                   <!-- <input id="songDislikeInput" type="text" class="form-control" placeholder="Song" name="dislikeSong"> -->
                 </div>
@@ -73,7 +73,13 @@
   <!-- Search Results -->
   <section class="features-icons bg-light text-center">
     <div id="results" class="container">
-      <h2>{{output_message}}</h2><br>
+
+      <h2>{{output_message}}</h2>
+      {% if output_add != "" %}
+      <p class="lead mb-0"><b>{{output_add}}</b></p>
+      {% endif %}
+
+      <br><br>
       {% for score,d in data %}
       <div class="row">
           <div class="col-lg-3 showcase-img ">
@@ -85,11 +91,11 @@
           </div>
           <div class="col-lg-9 my-auto showcase-text text-lg-left">
             <p class="lead mb-0"><b>{{d.name}}</b></p>
-            <p>{{d.description}}</p>
-            <p class="font-weight-light mb-0">Year Released: {{d.year}}</p>
-            <p class="font-weight-light mb-0">Genres: {{d.genres|join(', ')}}</p>
-            <p class="font-weight-light mb-0">Rating: {{d.rating}}</p>
-            <p class="font-weight-light mb-0">Composite Score: {{score|round(2)}}</p>
+            <p class="mb-0">{{d.description}}</p>
+            <p class="mb-0">Year Released: {{d.year}}</p>
+            <p class="mb-0">Genres: {{d.genres|join(', ')}}</p>
+            <p>Rating: {{d.rating}}</p>
+            <p class="font-weight-light">Composite Similarity Score: {{(score*10)|round(2)}}%</p>
           </div>         
       </div>
       <br>

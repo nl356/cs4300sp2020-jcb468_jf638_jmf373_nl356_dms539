@@ -17,7 +17,6 @@ def search():
 	year = request.args.get('year')
 	rating = request.args.get('rating') 
 	dislikeSong = request.args.get('dislikeSong')
-
 	output_message_addendum = ""
 
 	if year == "" or year==None:
@@ -28,20 +27,21 @@ def search():
 			if year < 1910 or year > 2019:
 				year == None
 			else:
-				output_message_addendum = " within " + str(year)
+				decade = int(year)-(int(year)%10)
+				output_message_addendum = "Showing movies released within the decade " + str(decade)
 		except:
 			year = None
-
 
 	if rating == "" or rating==None:
 		rating = None
 	elif output_message_addendum != "":
 		output_message_addendum += (" and a rating of at least " + rating)
 	else:
-		output_message_addendum = " with a rating of at least " + rating
+		output_message_addendum = "Showing movies with a rating of at least " + rating
 
 	if dislikeSong == None:
 		dislikeSong = ""
+
 
 	if not query:
 		data = []
@@ -49,12 +49,10 @@ def search():
 	else:
 		song_title = query[:query.find('(')-1]
 		if song_title in title_list:
-
-			
 			
 			if dislikeSong == "":
 				data = main_search(song_title, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=None)
-				output_message = "Search results for the song \"" + song_title + "\" " + output_message_addendum +":"
+				output_message = "Search results for the song \"" + song_title + "\"  :"
 			else: 
 				dis_song_title = dislikeSong[:dislikeSong.find('(')-1]
 
@@ -62,14 +60,17 @@ def search():
 					dis_song_title = None
 				
 				if dis_song_title == song_title:
-					output_message = "Please choose a different song you dislike"
+					output_message = "Cannot have the same input song and dislike song. Please choose a different song."
 					data = []
 				else:
 					if dis_song_title != None:
-						output_message_addendum += (" with disliked song \"" + dis_song_title + "\"")
+						if output_message_addendum != "":
+							output_message_addendum += (" with disliked song \"" + dis_song_title + "\"")
+						else:
+							output_message_addendum = "Showing movies with disliked song \"" + dis_song_title + "\""
 
 					data = main_search(song_title, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=dis_song_title)
-					output_message = "Search results for the song \"" + song_title + "\" " + output_message_addendum +":"
+					output_message = "Search results for the song \"" + song_title + "\" :"
 		else:
 
 			if len(title_list) > 0:
@@ -102,15 +103,14 @@ def search():
 						replacement_song = title
 
 			if min_distance <= 3:
-
 				
 				if dislikeSong == "":
 					data = main_search(replacement_song, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=None)
 
 					if min_distance == 0:
-						output_message = "Search results for the song \"" + replacement_song + "\" " + output_message_addendum +":"
+						output_message = "Search results for the song \"" + replacement_song + "\" :"
 					else:
-						output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" " + output_message_addendum +":"
+						output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" :"
 				else: 
 					dis_song_title = dislikeSong[:dislikeSong.find('(')-1]
 
@@ -118,20 +118,23 @@ def search():
 						dis_song_title = None
 					
 					if dis_song_title == song_title:
-						output_message = "Please choose a different song you dislike"
+						output_message = "Cannot have the same input song and dislike song. Please choose a different song."
 						data = []
 					else:
 						if dis_song_title != None:
-							output_message_addendum += (" with disliked song \"" + dis_song_title + "\"")
+							if output_message_addendum != "":
+								output_message_addendum += (" with disliked song \"" + dis_song_title + "\"")
+							else:
+								output_message_addendum = "Showing movies with disliked song \"" + dis_song_title + "\""
 
 						data = main_search(replacement_song, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=dis_song_title)
 						if min_distance == 0:
-							output_message = "Search results for the song \"" + replacement_song + "\" " + output_message_addendum +":"
+							output_message = "Search results for the song \"" + replacement_song + "\" :"
 						else:
-							output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" " + output_message_addendum +":"
+							output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" :"
 
 			else:
 				data = []
 				output_message = "No results for the song \"" + query + "\". Please enter another song title."
 				
-	return render_template('search.html', output_message=output_message, data=data, song_list=json.dumps(title_artist_list))
+	return render_template('search.html', output_message=output_message, output_add=output_message_addendum, data=data, song_list=json.dumps(title_artist_list))
