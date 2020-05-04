@@ -77,7 +77,7 @@ def search():
 
 			if min_distance <= 3:
 				data = main_search(replacement_song, num_movies_to_output=5)
-				output_message = "Search results for the song \"" + replacement_song + "\" :"
+				output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" :"
 			else:
 				data = []
 				output_message = "No results for the song \"" + query + "\". Please enter another song title."
