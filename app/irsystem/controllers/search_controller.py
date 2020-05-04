@@ -17,6 +17,22 @@ def search():
 	year = request.args.get('year')
 	rating = request.args.get('rating') 
 	dislikeSong = request.args.get('dislikeSong')
+
+	output_message_addendum = ""
+
+	if year == "":
+		year = None
+	else:
+		output_message_addendum = " within " + year
+
+	if rating == "":
+		rating = None
+	elif output_message_addendum != "":
+		output_message_addendum += (" and a rating of at least " + rating)
+	else:
+		output_message_addendum = " with a rating of at least " + rating
+
+
 	if not query:
 		data = []
 		output_message = 'Please enter a song title above to see results!'
@@ -24,14 +40,11 @@ def search():
 		song_title = query[:query.find('(')-1]
 		if song_title in title_list:
 
-			if year == "":
-				year = None
-			if rating == "":
-				rating = None
+			
 			
 			if dislikeSong == "":
 				data = main_search(song_title, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=None)
-				output_message = "Search results for the song \"" + song_title + "\" :"
+				output_message = "Search results for the song \"" + song_title + "\" " + output_message_addendum +":"
 			else: 
 				dis_song_title = dislikeSong[:dislikeSong.find('(')-1]
 
@@ -42,8 +55,11 @@ def search():
 					output_message = "Please choose a different song you dislike"
 					data = []
 				else:
+					if dis_song_title != None:
+						output_message_addendum += (" with disliked song \"" + dis_song_title + "\"")
+
 					data = main_search(song_title, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=dis_song_title)
-					output_message = "Search results for the song \"" + song_title + "\" :"
+					output_message = "Search results for the song \"" + song_title + "\" " + output_message_addendum +":"
 		else:
 
 			if len(title_list) > 0:
@@ -77,14 +93,10 @@ def search():
 
 			if min_distance <= 3:
 
-				if year == "":
-					year = None
-				if rating == "":
-					rating = None
 				
 				if dislikeSong == "":
 					data = main_search(replacement_song, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=None)
-					output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" :"
+					output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" " + output_message_addendum +":"
 				else: 
 					dis_song_title = dislikeSong[:dislikeSong.find('(')-1]
 
@@ -95,8 +107,11 @@ def search():
 						output_message = "Please choose a different song you dislike"
 						data = []
 					else:
+						if dis_song_title != None:
+							output_message_addendum += (" with disliked song \"" + dis_song_title + "\"")
+
 						data = main_search(replacement_song, num_movies_to_output=5, year=year, rating=rating, disliked_song_title=dis_song_title)
-						output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" :"
+						output_message = "We couldn't find \"" + song_title + "\", showing results for \"" + replacement_song + "\" " + output_message_addendum +":"
 
 			else:
 				data = []
