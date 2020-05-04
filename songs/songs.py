@@ -22,8 +22,8 @@ def add_songs_sentiments():
 	songs = read_songs_json()
 
 	for song in songs:
-		song["lyrics_sentiment"] = round(TextBlob(song["lyrics"]).polarity, 5)
-		song["genre_sentiment"] = round(TextBlob(" ".join(song["genre"])).polarity, 5)
+		song["lyrics_sentiment"] = round(TextBlob(song["lyrics"], analyzer=NaiveBayesAnalyzer()).polarity, 5)
+		song["genre_sentiment"] = round(TextBlob(" ".join(song["genre"], analyzer=NaiveBayesAnalyzer())).polarity, 5)
 
 	with open('./songs/songs.json', 'w') as f:
 		json.dump(songs, f, indent=4)

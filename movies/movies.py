@@ -59,11 +59,11 @@ def write_movies_json():
 			movie_json["imdb_id"] = row[0]
 			movie_json["name"] = row[1]
 			movie_json["description"] = row[13]
-			movie_json["description_sentiment"] = round(TextBlob(row[13]).polarity, 5)
+			movie_json["description_sentiment"] = round(TextBlob(row[13], analyzer=NaiveBayesAnalyzer()).polarity, 5)
 
 			movie_json["year"] = int(row[3])
 			movie_json["genres"] = row[5].split(", ")
-			movie_json["genres_sentiment"] = round(TextBlob(row[5]).polarity, 5)
+			movie_json["genres_sentiment"] = round(TextBlob(row[5], analyzer=NaiveBayesAnalyzer()).polarity, 5)
 
 			movie_json["rating"] = float(row[14])
 

@@ -8,8 +8,7 @@ from nltk.metrics.distance import edit_distance
 from songs.songs import read_songs_json
 
 song_data = read_songs_json()
-# NEED TO INCORPORATE FULL DATA SET
-title_artist_list = sorted([song["name"]+" ("+song["artists"]+")" for song in song_data])[:1000]
+title_artist_list = sorted([song["name"]+" ("+song["artists"]+")" for song in song_data])
 title_list = sorted([song["name"] for song in song_data])
 
 @irsystem.route('/', methods=['GET'])
